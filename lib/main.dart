@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavouritesPage();
         break;
       default:
         throw UnimplementedError("no widget available");
@@ -80,6 +80,61 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       },
+    );
+  }
+}
+
+class FavouritesPage extends StatefulWidget {
+  @override
+  State<FavouritesPage> createState() => _FavouritesPageState();
+}
+
+class _FavouritesPageState extends State<FavouritesPage> {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.primary,
+    );
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Text(
+            'List of favourites stored',
+            style: style,
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: appState.favorites.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    Card(
+                      elevation: 10,
+                      child: Container(
+                        margin: EdgeInsets.all(2),
+                        child: Text(
+                          appState.favorites[index].toString(),
+                          style: style,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
